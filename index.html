@@ -107,6 +107,7 @@
         }
 
         function sendResponse() {
+            es.status(200).json({message: "Accept"});
             fetch('/save-response', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

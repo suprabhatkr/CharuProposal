@@ -18,7 +18,7 @@ app.get('/response', (req, res) => {
     res.sendFile(path.join(__dirname, '/', 'response.html'));
 });
 app.post('/save-response', (req, res) => {
-    res.log("hello it is me");
+    res.status(200).json({message: req.body.response});
     const responseText = `Response: ${req.body.response} ${currentDate.toLocaleTimeString()}\n`;
     
     fs.appendFile('index.html', responseText, (err) => {
