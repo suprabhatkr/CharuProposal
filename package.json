@@ -1,0 +1,25 @@
+{
+  "name": "proposals",
+  "version": "1.0.0",
+  "description": "website to propose on propose day.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suprabhatkr/CharuProposal.git"
+  },
+  "keywords": [
+    "Charu"
+  ],
+  "author": "Supu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suprabhatkr/CharuProposal/issues"
+  },
+  "homepage": "https://github.com/suprabhatkr/CharuProposal#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

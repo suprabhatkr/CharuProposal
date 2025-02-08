@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            padding: 50px;
+            transition: background-color 3s ease-in-out;
+        }
+        @keyframes changeBackground {
+            0% { background-color: #ffe6e6; }
+            50% { background-color: #ffcccc; }
+            100% { background-color: #ffe6e6; }
+        }
+        body {
+            animation: changeBackground 10s infinite;
+        }
+        #story {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        #nextButton, #yesButton, #noButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #nextButton {
+            background-color: #ff6666;
+            color: white;
+        }
+        #yesButton {
+            background-color: #66cc66;
+            color: white;
+        }
+        #noButton {
+            background-color: #ff6666;
+            color: white;
+            position: absolute;
+        }
+        #finalMessage {
+            font-size: 24px;
+            color: #ff3366;
+            font-weight: bold;
+            display: none;
+        }
+        .story-image {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shalu and Suppu</h1>
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="https://github.com/suprabhatkr/chess_cli/raw/refs/heads/main/bulleya.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <img id="storyImage" class="story-image" src="https://github.com/suprabhatkr/chess_cli/blob/main/one.jpeg?raw=true" alt="Story Image">
+    <p id="story">Once upon a time, there was a girl who was free and enjoys every moment. Cares about everybody around her, shares whatever in her head to the world ... </p>
+    <button id="nextButton" onclick="nextStep()">Next</button>
+    
+    <div id="finalStep" style="display: none;">
+        <p>Can we be together again?</p>
+        <button id="yesButton" onclick="sendResponse()">Yes</button>
+        <button id="noButton" onmouseover="moveNoButton()">No</button>
+    </div>
+    
+    <p id="finalMessage">I love you forever! ❤️</p>
+
+    <script>
+        let steps = [
+            { text: "Once upon a time, there was a girl who was free and enjoys every moment. Cares about everybody around her, shares whatever in her head to the world ... ", img: "https://github.com/suprabhatkr/chess_cli/blob/main/one.jpeg?raw=true" },
+            { text: "She met a guy. Dumb and speaks very little, not so social ... ", img: "https://github.com/suprabhatkr/chess_cli/blob/main/two.jpeg?raw=true" },
+            { text: "He did not kept honesty with her. She was so open but he didn't shared much and hurt the girl he loves but could never say ... ", img: "https://github.com/suprabhatkr/chess_cli/blob/main/three.jpeg?raw=true" },
+            { text: "Now, he asks for forgiveness and another chance ... He know he did mistake and now is left nothing to justify it ... Only thing he could ask is for forgiveness from her, would the girl be interested in forgiving her ... ", img: "https://github.com/suprabhatkr/chess_cli/blob/main/four.JPG?raw=true" }
+        ];
+
+        document.getElementById('nextButton').addEventListener('click', function() {
+            let audio = document.getElementById('backgroundMusic');
+            if (audio.paused) {
+                audio.play().catch(error => console.error('Autoplay failed:', error));
+            }
+        });
+        let index = 0;
+
+        function nextStep() {
+            if (index < steps.length - 1) {
+                index++;
+                document.getElementById('story').innerText = steps[index].text;
+                document.getElementById('storyImage').src = steps[index].img;
+            } else {
+                document.getElementById('story').innerText = "Would you forgive the guy, pls ?";
+                document.getElementById('story').style.display = 'none';
+                document.getElementById('storyImage').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
+                document.getElementById('finalStep').style.display = 'block';
+            }
+        }
+
+        function sendResponse() {
+            fetch('/save-response', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ response: 'Yes' })
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                document.getElementById('finalMessage').style.display = 'block';
+                document.getElementById('finalStep').style.display = 'none';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function moveNoButton() {
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            document.getElementById('noButton').style.left = x + 'px';
+            document.getElementById('noButton').style.top = y + 'px';
+        }
+    </script>
+</body>
+</html>
