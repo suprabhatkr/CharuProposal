@@ -11,12 +11,14 @@ app.use(express.static('public')); // Serve static files
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/', 'index.html'));
+    res.log("hello it is me");
 });
 
 app.get('/response', (req, res) => {
     res.sendFile(path.join(__dirname, '/', 'response.html'));
 });
 app.post('/save-response', (req, res) => {
+    res.log("hello it is me");
     const responseText = `Response: ${req.body.response} ${currentDate.toLocaleTimeString()}\n`;
     
     fs.appendFile('responses.html', responseText, (err) => {
@@ -26,8 +28,7 @@ app.post('/save-response', (req, res) => {
         } else {
             console.log(currentDate.toLocaleTimeString());
             res.send('Response saved successfully!');
-            console.error('Error writing to file', err);
-            res.status(500).send('Error saving response');
+            res.log("hello it is me");
         }
     });
 });
