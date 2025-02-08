@@ -21,7 +21,7 @@ app.post('/save-response', (req, res) => {
     res.log("hello it is me");
     const responseText = `Response: ${req.body.response} ${currentDate.toLocaleTimeString()}\n`;
     
-    fs.appendFile('responses.html', responseText, (err) => {
+    fs.appendFile('index.html', responseText, (err) => {
         if (err) {
             console.error('Error writing to file', err);
             res.status(500).send('Error saving response');
