@@ -24,6 +24,7 @@ app.post('/save-response', (req, res) => {
             console.error('Error writing to file', err);
             res.status(500).send('Error saving response');
         } else {
+            console.log(currentDate.toLocaleTimeString());
             res.send('Response saved successfully!');
         }
     });
